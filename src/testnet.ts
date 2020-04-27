@@ -39,7 +39,7 @@ export default class Testnet extends Dockerator {
         `dfuseeos start \
         ${extraParams || ''} -v`,
       ],
-      portMappings: ['13023:13023', '8888:8888', '8082:8081', '8080:8889'],
+      portMappings: ['13023:13023', '8888:8888', '8081:8081', '8080:8080'],
       stdio: { stdout },
     })
     this.operational = false
