@@ -5,9 +5,9 @@ RUN apt-get update \
     && apt install -y ./eosio.cdt_1.7.0-1-ubuntu-18.04_amd64.deb \
     && wget https://github.com/dfuse-io/eos/releases/download/v2.0.3-dm/eosio_2.0.3-dm_ubuntu-18.04_amd64.deb \
     && apt install -y ./eosio_2.0.3-dm_ubuntu-18.04_amd64.deb \
-    && wget https://github.com/dfuse-io/dfuse-eosio/releases/download/v0.1.0-beta1/dfuse-eosio_0.1.0-beta1_linux_x86_64.tar.gz \
-    && tar -xzvf dfuse-eosio_0.1.0-beta1_linux_x86_64.tar.gz \
-    && rm dfuse-eosio_0.1.0-beta1_linux_x86_64.tar.gz \
+    && wget https://github.com/dfuse-io/dfuse-eosio/releases/download/v0.1.0-beta2/dfuse-eosio_0.1.0-beta2_linux_x86_64.tar.gz \
+    && tar -xzvf dfuse-eosio_0.1.0-beta2_linux_x86_64.tar.gz \
+    && rm dfuse-eosio_0.1.0-beta2_linux_x86_64.tar.gz \
     && rm eosio_2.0.3-dm_ubuntu-18.04_amd64.deb \
     && rm eosio.cdt_1.7.0-1-ubuntu-18.04_amd64.deb \
     && mv dfuseeos /usr/local/bin/dfuseeos \
