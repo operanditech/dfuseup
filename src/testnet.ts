@@ -36,10 +36,10 @@ export default class Testnet extends Dockerator {
       command: [
         'bash',
         '-c',
-        `dfuseeos start \
+        `dfuseeos start  \
         ${extraParams || ''} -v`,
       ],
-      portMappings: ['13023:13023', '8888:8888', '8081:8081', '8080:8889'],
+      portMappings: ['13013:13013', '8888:8888', '8081:8081', '8080:8889'],
       stdio: { stdout },
     })
     this.operational = false
