@@ -53,8 +53,8 @@ export default class Testnet extends Dockerator {
     })
   }
 
-  public async start() {
-    await super.start()
+  public async start({ containerId = '' } = {}) {
+    await super.start({ containerId })
     try {
       await new Promise((resolve, reject) => {
         const timeout = setTimeout(
