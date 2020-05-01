@@ -66,7 +66,9 @@ export default class Testnet extends Dockerator {
           resolve()
         }
       })
-      await this.dfuseup.loadSystemContracts()
+      if (!containerId) {
+        await this.dfuseup.loadSystemContracts()
+      }
     } catch (error) {
       await this.stop({ autoRemove: false })
       throw error
