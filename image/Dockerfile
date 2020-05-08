@@ -12,7 +12,7 @@ RUN apt-get update \
     && rm eosio.cdt_1.7.0-1-ubuntu-18.04_amd64.deb \
     && mv dfuseeos /usr/local/bin/dfuseeos \
     && (echo "y" && cat) | dfuseeos init \
-    && sed -i 's/127.0.0.1:8888/0.0.0.0:8888/g' dfuse.yaml \
+    && sed -i 's/127.0.0.1:8888/0.0.0.0:8888/g' /producer/config.ini \
     && apt-get remove -y wget ca-certificates \
     && apt-get autoremove -y \
     && apt-get clean \
