@@ -52,14 +52,22 @@ export default class Compiler extends Dockerator {
       `${path.join(process.cwd(), parsedOutput.dir)}:/mnt/dev/output`,
     ]
     const inputFile = path.posix.join('/mnt/dev/input', parsedInput.base)
-    const outputFile = path.posix.join('/mnt/dev/output', parsedOutput.base)
+    const outputFileWasm = path.posix.join('/mnt/dev/output', parsedOutput.base)
+    const outputFileAbi =
+      path.posix.join('/mnt/dev/output', parsedOutput.name) + '.abi'
+    const tmpFileWasm = path.posix.join('/mnt/dev/output', parsedOutput.base)
+    const tmpFileAbi =
+      path.posix.join('/mnt/dev/output', parsedOutput.base) + '.abi'
     this.command = [
       'bash',
       '-c',
-      `eosio-cpp -o ${outputFile} ${inputFile} ${
-        contract ? `-abigen -contract ${contract}` : ''
-      } ${extraParams}`,
+      `eosio-cpp -abigen -o ${tmpFileWasm} ${inputFile}  ${
+        contract ? ` -contract ${contract}` : ''
+      } ${extraParams} &&
+      mv ${tmpFileWasm} ${outputFileWasm} && 
+      mv ${tmpFileAbi} ${outputFileAbi}`,
     ]
+
     await super.start({ blockUntilExit: true })
     await super.remove()
   }
