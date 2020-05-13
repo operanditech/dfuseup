@@ -56,7 +56,7 @@ export default class Compiler extends Dockerator {
     const outputFileAbi =
       path.posix.join('/mnt/dev/output', parsedOutput.name) + '.abi'
     const tmpFileWasm = path.posix.join('/tmp', parsedOutput.base)
-    const tmpFileAbi = path.posix.join('/tmp', parsedOutput.base) + '.abi'
+    const tmpFileAbi = path.posix.join('/tmp', parsedOutput.name) + '.abi'
     this.command = [
       'bash',
       '-c',
