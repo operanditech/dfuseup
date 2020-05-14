@@ -42,6 +42,7 @@ export default class Compiler extends Dockerator {
   public async compile(
     input: string,
     output: string,
+    baseDir?: string,
     contract?: string,
     { extraParams = '' } = {}
   ) {
@@ -51,6 +52,13 @@ export default class Compiler extends Dockerator {
       `${path.join(process.cwd(), parsedInput.dir)}:/mnt/dev/input`,
       `${path.join(process.cwd(), parsedOutput.dir)}:/mnt/dev/output`,
     ]
+
+    if (baseDir) {
+      this.dockerConfig.HostConfig.Binds.push(
+        `${path.join(process.cwd(), baseDir)}:/mnt/dev/`
+      )
+    }
+
     const inputFile = path.posix.join('/mnt/dev/input', parsedInput.base)
     const outputFileWasm = path.posix.join('/mnt/dev/output', parsedOutput.base)
     const outputFileAbi =
