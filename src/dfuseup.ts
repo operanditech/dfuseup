@@ -23,12 +23,14 @@ export default class DfuseUp {
     input,
     output,
     contract,
+    baseDir,
     extraParams
   }: {
     printOutput?: boolean
     input: string
     output: string
     contract?: string
+    baseDir?: string
     extraParams?: string
   }) {
     await Compiler.compile({
@@ -36,6 +38,7 @@ export default class DfuseUp {
       input,
       output,
       contract,
+      baseDir,
       extraParams
     })
   }
