@@ -8,17 +8,19 @@ export default class Compiler extends Dockerator {
     input,
     output,
     contract,
+    baseDir,
     extraParams,
   }: {
     printOutput?: boolean
     input: string
     output: string
     contract?: string
+    baseDir?: string
     extraParams?: string
   }) {
     const compiler = new Compiler({ printOutput })
     await compiler.setup()
-    await compiler.compile(input, output, contract, { extraParams })
+    await compiler.compile(input, output, contract, baseDir, { extraParams })
   }
 
   constructor({ image = '', printOutput = false } = {}) {
