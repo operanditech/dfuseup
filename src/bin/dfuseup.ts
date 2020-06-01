@@ -56,7 +56,7 @@ prog
         printOutput: true,
       })
       await compiler.setup()
-      await compiler.compile(args.input, args.output, opts.contract, {
+      await compiler.compile(args.input, args.output, opts.contract, opts.baseDir, {
         extraParams: opts.extraParams,
       })
     })
