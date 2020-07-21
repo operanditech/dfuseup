@@ -13,6 +13,7 @@ export default class Testnet extends Dockerator {
 
   constructor({
     image = '',
+    portMappings = ['13023:13023', '8888:8888', '8081:8081', '8080:8889'],
     printOutput = false,
     extraParams = '',
     dfuseup = new DfuseUp(),
@@ -39,7 +40,7 @@ export default class Testnet extends Dockerator {
         `dfuseeos start  \
         ${extraParams || ''} -v`,
       ],
-      portMappings: ['13023:13023', '8888:8888', '8081:8081', '8080:8889'],
+      portMappings,
       stdio: { stdout },
     })
     this.operational = false
