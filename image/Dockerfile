@@ -3,12 +3,12 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends wget ca-certificates software-properties-common \
     && wget https://github.com/EOSIO/eosio.cdt/releases/download/v1.7.0/eosio.cdt_1.7.0-1-ubuntu-18.04_amd64.deb \
     && apt install -y ./eosio.cdt_1.7.0-1-ubuntu-18.04_amd64.deb \
-    && wget https://github.com/dfuse-io/eos/releases/download/v2.0.3-dm/eosio_2.0.3-dm_ubuntu-18.04_amd64.deb \
-    && apt install -y ./eosio_2.0.3-dm_ubuntu-18.04_amd64.deb \
-    && wget https://github.com/dfuse-io/dfuse-eosio/releases/download/v0.1.0-beta2/dfuse-eosio_0.1.0-beta2_linux_x86_64.tar.gz \
-    && tar -xzvf dfuse-eosio_0.1.0-beta2_linux_x86_64.tar.gz \
-    && rm dfuse-eosio_0.1.0-beta2_linux_x86_64.tar.gz \
-    && rm eosio_2.0.3-dm_ubuntu-18.04_amd64.deb \
+    && wget https://github.com/dfuse-io/eos/releases/download/v2.0.6-dm-12.0/eosio_2.0.6-dm.12.0-1-ubuntu-18.04_amd64.deb \
+    && apt install -y ./eosio_2.0.6-dm.12.0-1-ubuntu-18.04_amd64.deb \
+    && wget https://github.com/dfuse-io/dfuse-eosio/releases/download/v0.1.0-beta6/dfuse-eosio_0.1.0-beta6_linux_x86_64.tar.gz \
+    && tar -xzvf dfuse-eosio_0.1.0-beta6_linux_x86_64.tar.gz \
+    && rm dfuse-eosio_0.1.0-beta6_linux_x86_64.tar.gz \
+    && rm eosio_2.0.6-dm.12.0-1-ubuntu-18.04_amd64.deb \
     && rm eosio.cdt_1.7.0-1-ubuntu-18.04_amd64.deb \
     && mv dfuseeos /usr/local/bin/dfuseeos \
     && (echo "y" && cat) | dfuseeos init \
