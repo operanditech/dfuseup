@@ -46,6 +46,7 @@ prog
     'Output file where the compiled WASM should be written.'
   )
   .option('-c, --contract <name>', 'Contract name, for ABI generation.')
+  .option('-b, --base-dir <dir>', 'Contract name, for ABI generation.')
   .option(
     '-e, --extra-params <params>',
     'String with additional command parameters to forward to eosio-cpp.'
@@ -56,9 +57,15 @@ prog
         printOutput: true,
       })
       await compiler.setup()
-      await compiler.compile(args.input, args.output, opts.contract, opts.baseDir, {
-        extraParams: opts.extraParams,
-      })
+      await compiler.compile(
+        args.input,
+        args.output,
+        opts.baseDir,
+        opts.contract,
+        {
+          extraParams: opts.extraParams,
+        }
+      )
     })
   )
   .command('testnet', 'Run a local eosio testnet for development.')
@@ -93,7 +100,10 @@ prog
       await testnet.start()
       if (opts.callback) {
         try {
-          await execa.command(opts.callback, { stdio: 'inherit', shell: true })
+          await execa.command(opts.callback, {
+            stdio: 'inherit',
+            shell: true,
+          })
         } catch (error) {
           await testnet.stop()
           throw error
