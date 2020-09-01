@@ -54,7 +54,7 @@ export default class Testnet extends Dockerator {
     })
   }
 
-  public async start({ containerId = '' } = {}) {
+  public async start({ containerId = '', loadSystemContracts = true } = {}) {
     await super.start({ containerId })
     try {
       await new Promise((resolve, reject) => {
@@ -67,7 +67,7 @@ export default class Testnet extends Dockerator {
           resolve()
         }
       })
-      if (!containerId) {
+      if (!containerId && loadSystemContracts) {
         await this.dfuseup.loadSystemContracts()
       }
     } catch (error) {

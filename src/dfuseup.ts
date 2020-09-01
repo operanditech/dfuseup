@@ -15,7 +15,7 @@ import Compiler from './compiler'
 export default class DfuseUp {
   public static keypair = {
     public: 'EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV',
-    private: '5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3'
+    private: '5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3',
   }
 
   public static async compile({
@@ -24,7 +24,7 @@ export default class DfuseUp {
     output,
     contract,
     baseDir,
-    extraParams
+    extraParams,
   }: {
     printOutput?: boolean
     input: string
@@ -39,7 +39,7 @@ export default class DfuseUp {
       output,
       contract,
       baseDir,
-      extraParams
+      extraParams,
     })
   }
 
@@ -49,14 +49,16 @@ export default class DfuseUp {
     if (eos) {
       this.morph = new Morpheos(eos)
     } else {
-      const signatureProvider = new JsSignatureProvider([DfuseUp.keypair.private])
+      const signatureProvider = new JsSignatureProvider([
+        DfuseUp.keypair.private,
+      ])
       const rpc = new JsonRpc('http://localhost:8888', { fetch })
       this.morph = new Morpheos(
         new Api({
           rpc,
           signatureProvider,
           textEncoder: new TextEncoder() as any,
-          textDecoder: new TextDecoder() as any
+          textDecoder: new TextDecoder() as any,
         })
       )
     }
@@ -67,7 +69,7 @@ export default class DfuseUp {
       threshold: 1,
       keys: [{ weight: 1, key: publicKey }],
       accounts: [],
-      waits: []
+      waits: [],
     }
     return this.morph.transact({
       account: 'eosio',
@@ -75,15 +77,15 @@ export default class DfuseUp {
       authorization: [
         {
           actor: 'eosio',
-          permission: 'active'
-        }
+          permission: 'active',
+        },
       ],
       data: {
         creator: 'eosio',
         name,
         owner: auth,
-        active: auth
-      }
+        active: auth,
+      },
     })
   }
 
@@ -93,7 +95,7 @@ export default class DfuseUp {
       path.format({
         ...path.parse(contractPath),
         ext: '.abi',
-        base: undefined
+        base: undefined,
       })
     )
 
@@ -111,7 +113,7 @@ export default class DfuseUp {
 
     const buffer = new Serialize.SerialBuffer({
       textEncoder: this.morph.eos.textEncoder,
-      textDecoder: this.morph.eos.textDecoder
+      textDecoder: this.morph.eos.textDecoder,
     })
     abiDefinition.serialize(buffer, abi)
 
@@ -122,15 +124,15 @@ export default class DfuseUp {
         authorization: [
           {
             actor: account,
-            permission: 'active'
-          }
+            permission: 'active',
+          },
         ],
         data: {
           account,
           vmtype: 0,
           vmversion: 0,
-          code: wasm
-        }
+          code: wasm,
+        },
       },
       {
         account: 'eosio',
@@ -138,21 +140,21 @@ export default class DfuseUp {
         authorization: [
           {
             actor: account,
-            permission: 'active'
-          }
+            permission: 'active',
+          },
         ],
         data: {
           account,
-          abi: buffer.asUint8Array()
-        }
-      }
+          abi: buffer.asUint8Array(),
+        },
+      },
     ])
   }
 
   public async hasCodeActivePermission(account: string, contract: string) {
-    const auth = (await this.morph.eos.rpc.get_account(
-      account
-    )).permissions.find((p: any) => p.perm_name === 'active').required_auth
+    const auth = (
+      await this.morph.eos.rpc.get_account(account)
+    ).permissions.find((p: any) => p.perm_name === 'active').required_auth
     const entry = auth.accounts.find(
       (a: any) =>
         a.permission.actor === contract &&
@@ -163,12 +165,12 @@ export default class DfuseUp {
   }
 
   public async giveCodeActivePermission(account: string, contract: string) {
-    const auth = (await this.morph.eos.rpc.get_account(
-      account
-    )).permissions.find((p: any) => p.perm_name === 'active').required_auth
+    const auth = (
+      await this.morph.eos.rpc.get_account(account)
+    ).permissions.find((p: any) => p.perm_name === 'active').required_auth
     auth.accounts.push({
       permission: { actor: contract, permission: 'eosio.code' },
-      weight: auth.threshold
+      weight: auth.threshold,
     })
     return this.morph.transact({
       account: 'eosio',
@@ -176,15 +178,15 @@ export default class DfuseUp {
       authorization: [
         {
           actor: account,
-          permission: 'active'
-        }
+          permission: 'active',
+        },
       ],
       data: {
         account,
         permission: 'active',
         parent: 'owner',
-        auth
-      }
+        auth,
+      },
     })
   }
 
@@ -204,13 +206,13 @@ export default class DfuseUp {
       authorization: [
         {
           actor: 'eosio.token',
-          permission: 'active'
-        }
+          permission: 'active',
+        },
       ],
       data: {
         issuer: 'eosio.token',
-        maximum_supply: '1000000000.0000 EOS'
-      }
+        maximum_supply: '1000000000.0000 EOS',
+      },
     })
   }
 
@@ -226,8 +228,8 @@ export default class DfuseUp {
       data: {
         to: account,
         quantity: amount,
-        memo
-      }
+        memo,
+      },
     })
   }
 
@@ -245,8 +247,8 @@ export default class DfuseUp {
         from: Transaction.extractAccountName(from),
         to,
         quantity: quantity.quantity,
-        memo
-      }
+        memo,
+      },
     })
   }
 }
